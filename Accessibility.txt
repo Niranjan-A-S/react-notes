@@ -1,0 +1,36 @@
+Fragements
+----------
+These are used to group componenets instead of div 
+
+function ListItem({ item }) {
+  return (
+    <>
+      <dt>{item.term}</dt>
+      <dd>{item.description}</dd>
+    </>
+  );
+}
+
+They can be used with a key as below:
+
+function Glossary(props) {
+  return (
+    <dl>
+      {props.items.map(item => (
+        // Fragments should also have a `key` prop when mapping collections
+        <Fragment key={item.id}>
+          <dt>{item.term}</dt>
+          <dd>{item.description}</dd>
+        </Fragment>
+      ))}
+    </dl>
+  );
+}
+
+Labelling Forms
+---------------
+<label htmlFor="namedInput">Name:</label>
+<input id="namedInput" type="text" name="name"/>
+
+note the htmlFor attribute in JSX instead of for attribute	
+

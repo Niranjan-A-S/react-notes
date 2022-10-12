@@ -1,0 +1,70 @@
+Conext provide a way to pass the data down the component tree without manually passing the props
+down.
+Steps
+-----
+1) Create the context
+2) Provide the context value 
+3) Consume the context value 
+
+step 1
+const Context = React.createContext();
+
+const Provider = Context.Provider
+const Consumer = Context.Consumer
+
+export {Provider, Consumer}
+
+Every context object created with the createcontext method in react has a provider and consumer react component
+  
+Step 2
+we need to provide the context using the provider component created and it has to be provided to the
+ancestor component ie mostly the App component.Now the data that needs to be passed around the descendants
+is provided as an attribute value in the UserProvider which wraps the parent component
+
+import React from 'react'
+import ComponentA from './ComponentA'
+import { UserProvider } from './userContext'
+
+const App = () => {
+    return (
+        <div>
+            <UserProvider value="Niranjan">
+                <ComponentA />
+            </UserProvider>
+        </div>
+    )
+}
+
+export default App
+next consume the data in the required component as shown below
+
+Step 3
+
+import React from 'react'
+import { UserConsumer } from './userContext'
+
+const ComponentC = () => {
+    return (
+        <UserConsumer>
+            {username => {
+                return <div>Hello {username}</div>
+            }}
+        </UserConsumer>
+    )
+}
+
+export default ComponentC
+
+here the username gets the value that we passed in the provider
+
+
+extras
+------
+we can add a default value to the createcontext function which shows when the provider is absent
+in some cases and that default value matches the value consumed in the descendant components in consumer 
+component
+
+context type property
+
+
+

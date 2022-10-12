@@ -1,0 +1,39 @@
+const reducer = (state, action) => {
+ return {count: state.count + 1}
+}
+
+const [state, dispatch] = useReducer(reducer, {count: 0})
+
+const increment = () => {
+dispatch()
+}
+
+here reducer is the updating function
+dispatch is the function that calls the reducer on certian parameters
+the action is the function that we will  call in the dispatch
+so every time we call the dispatch function the reducer will return the new state by executing the action
+
+in case of a multiple actions such as increment or decrement we do the following
+
+const reducer = (state, action) => {
+ switch (action.type) {
+case "increment" : 
+return {count: state.count + 1}
+break;
+case "increment" : 
+return {count: state.count - 1}
+break;
+case default: 
+return  state
+}
+}
+
+const [state, dispatch] = useReducer(reducer, {count: 0})
+
+const increment = () => {
+dispatch({type:"decrement"})
+}
+
+const increment = () => {
+dispatch({type:"decrement"})
+}

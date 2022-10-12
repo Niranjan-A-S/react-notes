@@ -1,0 +1,30 @@
+Mounting
+--------
+1) constructor(props)
+2) static getDerivedStateFromProps(state, props) when the state of the component depends on the changes in props over time
+3) render()
+4) componentDidMount() immediately invoked after a component and all its children components have been rendered to the DOM
+
+Updating
+---------
+1) static getDerivedStateFromProps(state, props)
+2) shouldComponentUpdate(nextProps, nextState) - Dictates if the component should re render or not 
+3) render()
+4) getSnapsotBeforeUpdate(prevProps, prevState) - Called right before the changes from the virtual DOM are updated in the real DOM:
+                                               Used to capture information from the DOM
+                                               it will either return null or a value the value will be passed as a parameter to the next method
+
+5) componentDidUpdate(prevProps, prevState, snapshot) - Called after render is finished in the re-render cycles
+
+
+Unmounting
+----------
+componentWillUnmount() - method is invoked immediately before a component is unmounted or destroyed                                    
+
+
+Error Handling
+--------------
+
+1) static getDerivedStateFromError(error)
+2) componentDidCatch(error, info)
+ - error during rendering, or in constructor

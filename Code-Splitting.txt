@@ -1,0 +1,78 @@
+React.lazy
+---------
+This function allows to render a dynamic import just as a regular component
+
+const otherComponent = React.lazy(() => import(./otherComponent))
+
+This will automatically load the bundle containing the OtherComponent when this component is first rendered.
+
+Suspense component
+-------------------
+import React, { Suspense } from 'react';
+
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+const AnotherComponent = React.lazy(() => import('./AnotherComponent'));
+
+function MyComponent() {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <section>
+          <OtherComponent />
+          <AnotherComponent />
+        </section>
+      </Suspense>
+    </div>
+  );
+}
+The lazy component should then be rendered inside a Suspense component, which allows us to show some fallback content (such as a loading indicator) while we’re waiting for the lazy component to load.
+
+
+import React, { Suspense } from 'react';
+import Tabs from './Tabs';
+import Glimmer from './Glimmer';
+
+const Comments = React.lazy(() => import('./Comments'));
+const Photos = React.lazy(() => import('./Photos'));
+
+function MyComponent() {
+  const [tab, setTab] = React.useState('photos');
+  
+  function handleTabSelect(tab) {
+    setTab(tab);
+  };
+
+  return (
+    <div>
+      <Tabs onTabSelect={handleTabSelect} />
+      <Suspense fallback={<Glimmer />}>
+        {tab === 'photos' ? <Photos /> : <Comments />}
+      </Suspense>
+    </div>
+  );
+}
+
+in this case of rendering the comments after  photos but the commend takes sometime to load then the fallback inside the Suspense that is
+the Glimmer component is rendered.
+
+However, sometimes this user experience is not desirable. In particular, it is sometimes better to show the “old” UI while the new UI is 
+being prepared. You can use the new startTransition API to make React do this:
+
+function handleTabSelect(tab) {
+  startTransition(() => {
+    setTab(tab);
+  });
+}
+
+Here, you tell React that setting tab to 'comments' is not an urgent update, but is a transition that may take some time. React will then 
+keep the old UI in place and interactive, and will switch to showing <Comments /> when it is ready.
+
+Error Boundaries
+------------------
+Incase some modules refuses to show due to some network falure or something like that then this problem can be fixed with the help of error boundaries
+by providing a user experience and managing the error with the help of error boundaries.Once the error boundary is created you can use it anywhere 
+above your lazy components to display an error state when there’s a network error.
+
+//Router
+---------
+Inorder to use the code splitting principle effectively ........	
